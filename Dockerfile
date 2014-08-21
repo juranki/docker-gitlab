@@ -20,7 +20,8 @@ RUN /app/setup/install
 
 ADD assets/config/ /app/setup/config/
 ADD assets/init /app/init
-RUN chmod 755 /app/init
+ADD pipework /usr/local/bin/pipework
+RUN chmod 755 /app/init /usr/local/bin/pipework
 
 EXPOSE 22
 EXPOSE 80
@@ -28,5 +29,4 @@ EXPOSE 443
 
 VOLUME ["/home/git/data"]
 
-ENTRYPOINT ["/app/init"]
-CMD ["app:start"]
+CMD  pipework --wait && /app/init app:start
